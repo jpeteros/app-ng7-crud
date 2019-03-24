@@ -1,0 +1,8 @@
+<h1 [style.color]="h1Style ? 'gray': 'black'">Home Users</h1>
+
+<ul *ngIf="users">
+  <li *ngFor="let user of users">
+    <img [src]="user.avatar">
+    <p>{{ user.firstName }} {{ user.lastName }}</p>
+  </li>
+</ul>
