@@ -10,21 +10,47 @@
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let product of products">
-          <td>{{product.id}}</td>
-          <td>{{product.name}}</td>
-          <td>{{product.price}}</td>
-          <td>{{product.status}}</td>
-          <td>
-            <button class="btn btn-warning"> Edit</button> |
-            <button class="btn btn-danger"> Delete</button>
-          </td>
-        </tr>
+      <tbody [ngSwitch]="productReturn">
+          <ng-container *ngSwitchCase="true">
+              <tr>
+                  <td>{{product.id}}</td>
+                  <td>{{product.name}}</td>
+                  <td>{{product.price}}</td>
+                  <td>{{product.status}}</td>
+                  <td>
+                    <button class="btn btn-warning"> Edit</button> |
+                    <button class="btn btn-danger"> Delete</button>
+                  </td>
+                </tr>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+              <tr *ngFor="let product of products">
+                  <td>{{product.id}}</td>
+                  <td>{{product.name}}</td>
+                  <td>{{product.price}}</td>
+                  <td>{{product.status}}</td>
+                  <td>
+                    <button class="btn btn-warning"> Edit</button> |
+                    <button class="btn btn-danger"> Delete</button>
+                  </td>
+                </tr>
+          </ng-container>
       </tbody>
     </table>
   </div>
 </div>
+
+<div class="search-text"> 
+    <div class="row">
+        <div class="input-group">
+            <input type="text" placeholder="Find proudct id" class="form-control" name="productId" [(ngModel)]="productId"> 
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button" (click)="onSearch()">Go!</button>
+            </span>
+        </div><!-- /input-group -->
+      </div>            
+</div>
+
 
 <ng-template #add>
     <div class="modal-header">
@@ -34,6 +60,17 @@
       </button>
     </div>
     <div class="modal-body">
-      This is a modal.
+      <form>
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="productStruc.name">
+        <p class="text-danger">{{errorMsgStruc.name}}</p>
+
+        <label for="price">Price</label>
+        <input type="number" class="form-control" name="price" [(ngModel)]="productStruc.price">
+        <p class="text-danger">{{errorMsgStruc.price}}</p>
+
+        <button class="btn btn-primary" (click)="onSave()"> Save</button>
+        <br>
+      </form>
     </div>
   </ng-template>

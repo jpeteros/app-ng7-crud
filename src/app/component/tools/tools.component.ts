@@ -4,13 +4,19 @@ import { ProductService } from '../../services/product.service';
 import {BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-tools',
   templateUrl: './tools.component.html',
+  selector: 'app-tools',
   styleUrls: ['./tools.component.scss']
 })
 export class ToolsComponent implements OnInit {
   modalRef: BsModalRef;
   products: Product[];
+  productStruc: ProductStruc = new ProductStruc();
+  errorMsgStruc: ErrorMsgStruc = new ErrorMsgStruc();
+  productId: string;
+  product: Product;
+  productReturn: boolean = false;
+
 
   constructor(
     private productService : ProductService,
@@ -28,8 +34,55 @@ export class ToolsComponent implements OnInit {
     );
   }
 
+  onSave() {
+    this.errorMsgStruc.name = this.errorMsgStruc.price = '';
+    !this.productStruc.name ? this.errorMsgStruc.name = 'Name required' : '';
+    !this.productStruc.price ? this.errorMsgStruc.price = 'Price required' : '';
+
+    if (this.productStruc.name || this.productStruc.price) {
+      this.productStruc = {
+        ...this.productStruc,
+        'status': true
+      };
+      this.productService.createProduct(this.productStruc).subscribe(res => {
+        this.modalRef.hide();
+        console.log(res);
+      }, error => {
+        console.log(error);
+      });
+    }
+
+  }
+
+  onSearch() {
+    if (this.productId) {
+      console.log(this.productId);
+      this.productService.find(this.productId).then(res => {
+        this.product = res;
+        this.productReturn = true;
+        console.log(res);
+      }, error => { 
+        console.log(error);
+      });
+    } else {
+      this.ngOnInit();
+    }
+  }
+
   openModalAdd(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
+}
+
+class ProductStruc {
+    id: string;
+    name: string;
+    price: number;
+    status: boolean;
+}
+
+class ErrorMsgStruc {
+  name: string;
+  price: string;
 }

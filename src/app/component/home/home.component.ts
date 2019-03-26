@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../../services/home.service';
+import { UserService } from '../../services/user.service';
+import { User } from '../../entities/user.entity';
 
 
 @Component({
@@ -9,22 +10,20 @@ import { HomeService } from '../../services/home.service';
 })
 export class HomeComponent implements OnInit {
   h1Style: boolean = false;
-  users: Object;
-  users1: Object;
+  //users: Object;
   loading: boolean;
+  users: User[];
 
-  constructor(private homeService: HomeService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.loading = true;
-    this.homeService.getUsers().subscribe(data => {
+    this.userService.getUsers().subscribe(data => {
         this.loading = false;
         this.users = data;
         console.log(this.users);
       }
     );
   }
-
-
 
 }

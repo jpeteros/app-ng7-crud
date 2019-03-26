@@ -1,6 +1,6 @@
 export class Product {
     id : string;
     name: string;
-    price: string;
+    price: number;
     status: boolean;
 }

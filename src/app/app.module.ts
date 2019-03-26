@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +13,7 @@ import { HomeComponent } from './component/home/home.component';
 import { ToolsComponent } from './component/tools/tools.component';
 
 import { ProductService } from './services/product.service';
-import { HomeService } from './services/home.service';
+import { UserService } from './services/user.service';
 
 
 @NgModule({
@@ -28,10 +29,11 @@ import { HomeService } from './services/home.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    FormsModule
   ],
   providers: [
-    HomeService,
+    UserService,
     ProductService
   ],
   bootstrap: [AppComponent]
