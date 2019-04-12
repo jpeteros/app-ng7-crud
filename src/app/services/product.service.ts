@@ -25,5 +25,11 @@ export class ProductService{
         return this.httpClient.post(this.BASE_URL + 'createProduct', product);
     }
 
+    deleteProduct(id: string) {
+        return this.httpClient.get(this.BASE_URL + 'deleteProduct/' +  id)
+        .toPromise()
+        .then(res => res);
+    }
+
 
 }

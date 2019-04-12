@@ -69,7 +69,22 @@ export class ToolsComponent implements OnInit {
     }
   }
 
+  onDelete(id: string) {
+    console.log(id);
+      // this.productService.find(this.productId).then(res => {
+      //   this.product = res;
+      //   this.productReturn = true;
+      //   console.log(res);
+      // }, error => { 
+      //   console.log(error);
+      // });
+  }
+
   openModalAdd(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  openModalDelete(template: TemplateRef<any>, id: string) {
     this.modalRef = this.modalService.show(template);
   }
 
